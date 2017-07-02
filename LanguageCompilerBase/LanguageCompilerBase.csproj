@@ -40,12 +40,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LanguageCompiler.cs" />
+    <Compile Include="Listing\CodeListener.cs" />
     <Compile Include="Listing\Scope.cs" />
     <Compile Include="Listing\SyntaxListener.cs" />
     <Compile Include="Parsing\Definition\AdditionSyntax.cs" />
     <Compile Include="Parsing\Definition\AssignSyntax.cs" />
     <Compile Include="Parsing\Definition\BracketSyntax.cs" />
     <Compile Include="Parsing\Definition\DivisionSyntax.cs" />
+    <Compile Include="Parsing\Definition\ExpressionPartSyntax.cs" />
     <Compile Include="Parsing\Definition\ExpressionSyntax.cs" />
     <Compile Include="Parsing\Definition\IntegerSyntax.cs" />
     <Compile Include="Parsing\Definition\MultiplicationSyntax.cs" />

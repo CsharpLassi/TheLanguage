@@ -2,7 +2,7 @@
 
 namespace LanguageCompilerBase.Parsing.Definition
 {
-    public class OperatorSyntax : Syntax
+    public class OperatorSyntax : ExpressionPartSyntax
     {
         
         public ExpressionSyntax Left { get; set; }

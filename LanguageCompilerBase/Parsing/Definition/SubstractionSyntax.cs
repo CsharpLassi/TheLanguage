@@ -10,11 +10,5 @@ namespace LanguageCompilerBase.Parsing.Definition
             : base(nameof(SubstractionSyntax),"Minus")
         {
         }
-
-        public override void End(Scope scope)
-        {
-            Console.WriteLine("Sub");
-            scope.Generator.Emit(OpCodes.Sub);
-        }
     }
 }

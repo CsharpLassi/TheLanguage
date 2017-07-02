@@ -47,12 +47,5 @@ namespace LanguageCompilerBase.Parsing.Definition
             yield return Variable;
             yield return Expression;
         }
-
-        public override void End(Scope scope)
-        {
-            Console.WriteLine($"STLoc {Variable.VariableName}");
-            
-            scope.Generator.Emit(OpCodes.Stloc,Variable.Variable);
-        }
     }
 }

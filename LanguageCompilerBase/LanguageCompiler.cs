@@ -11,7 +11,7 @@ namespace LanguageCompilerBase
         private List<TokenDefinition> tokenDefinitions;
         private Tokenizer tokenizer;
         private Parser parser;
-        private SyntaxListener listener;
+        private SyntaxListener codeListener;
 
         public LanguageCompiler()
         {
@@ -35,7 +35,7 @@ namespace LanguageCompilerBase
 
             
             
-            listener = new SyntaxListener();
+            codeListener = new CodeListener();
             
             
         }
@@ -45,7 +45,7 @@ namespace LanguageCompilerBase
             var tokenResult = tokenizer.Parse(code);
             var syntaxTree = parser.Parse(tokenResult);
             
-            var scope = listener.Listen(syntaxTree);
+            var scope = codeListener.Listen(syntaxTree);
 
             var func = scope.Create();
 

@@ -10,11 +10,5 @@ namespace LanguageCompilerBase.Parsing.Definition
             : base(nameof(DivisionSyntax),"Divisor")
         {
         }
-
-        public override void End(Scope scope)
-        {
-            Console.WriteLine("Div");
-            scope.Generator.Emit(OpCodes.Div);
-        }
     }
 }

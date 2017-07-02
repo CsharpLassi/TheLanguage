@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Reflection.Emit;
 using LanguageCompilerBase.Listing;
 
 namespace LanguageCompilerBase.Parsing.Definition
 {
-    public class IntegerSyntax : Syntax
+    public class IntegerSyntax : ExpressionPartSyntax
     {
         public int Value { get; set; }
 
         public IntegerSyntax() 
             : base(nameof(IntegerSyntax))
         {
+            ExpressionType = "Int";
         }
 
         public override ParseStatus Check(SyntaxStream stream)
@@ -39,12 +41,6 @@ namespace LanguageCompilerBase.Parsing.Definition
         public override string ToString()
         {
             return Value.ToString();
-        }
-
-        public override void Start(Scope scope)
-        {
-            Console.WriteLine(Value);
-            scope.Generator.Emit(OpCodes.Ldc_I4,Value);
         }
     }
 }

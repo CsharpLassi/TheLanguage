@@ -5,7 +5,7 @@ using LanguageCompilerBase.Listing;
 
 namespace LanguageCompilerBase.Parsing.Definition
 {
-    public class VariableCallSyntax : Syntax
+    public class VariableCallSyntax : ExpressionPartSyntax
     {
         public string VariableName { get; set; }
         
@@ -35,12 +35,6 @@ namespace LanguageCompilerBase.Parsing.Definition
         public override IEnumerable<Syntax> GetElements()
         {
             yield break;
-        }
-
-        public override void Start(Scope scope)
-        {
-            Console.WriteLine($"LD {VariableName}");
-            scope.Generator.Emit(OpCodes.Ldloc,scope.LocalVariables[VariableName]);
         }
     }
 }

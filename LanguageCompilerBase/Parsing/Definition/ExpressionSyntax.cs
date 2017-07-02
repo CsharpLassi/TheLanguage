@@ -7,7 +7,7 @@ namespace LanguageCompilerBase.Parsing.Definition
     public class ExpressionSyntax : Syntax
     {
 
-        public Syntax Expression { get; set; }
+        public ExpressionPartSyntax Expression { get; set; }
 
         private readonly Type[] syntaxes;
         
@@ -27,7 +27,7 @@ namespace LanguageCompilerBase.Parsing.Definition
             };
         }
 
-        private ExpressionSyntax(Syntax syntax)
+        private ExpressionSyntax(ExpressionPartSyntax syntax)
             :base(nameof(ExpressionSyntax))
         {
             Expression = syntax;
@@ -49,7 +49,7 @@ namespace LanguageCompilerBase.Parsing.Definition
                 
                     if (stream.Count == 1 && stream[0].GetType() == syntaxType)
                     {
-                        Expression = stream[0];
+                        Expression = (ExpressionPartSyntax)stream[0];
                         stream.Replace(0,1,this);
                         return ParseStatus.Ok;
                     }

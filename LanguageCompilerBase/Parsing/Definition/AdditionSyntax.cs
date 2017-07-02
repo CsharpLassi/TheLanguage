@@ -12,13 +12,5 @@ namespace LanguageCompilerBase.Parsing.Definition
             : base(nameof(AdditionSyntax),"Plus")
         {
         }
-
-
-
-        public override void End(Scope scope)
-        {
-            Console.WriteLine("Add");
-            scope.Generator.Emit(OpCodes.Add);
-        }
     }
 }

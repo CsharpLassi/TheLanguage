@@ -41,13 +41,5 @@ namespace LanguageCompilerBase.Parsing.Definition
            yield break;
         }
 
-        public override void Start(Scope scope)
-        {
-            Console.WriteLine($"Create {VariableName}");
-
-            var type = Type.GetType(VariableType);
-            
-            Variable = scope.CreateVariable(VariableName,typeof(int));
-        }
     }
 }

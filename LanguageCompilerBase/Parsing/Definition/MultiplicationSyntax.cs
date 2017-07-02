@@ -11,11 +11,5 @@ namespace LanguageCompilerBase.Parsing.Definition
             : base(nameof(MultiplicationSyntax),"Point")
         {
         }
-
-        public override void End(Scope scope)
-        {
-            Console.WriteLine("Mul");
-            scope.Generator.Emit(OpCodes.Mul);
-        }
     }
 }
