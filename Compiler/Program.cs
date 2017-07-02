@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection.Emit;
-using Compiler.Scanning;
-using Compiler.Parsing;
+using System.Runtime.InteropServices.ComTypes;
+using LanguageCompilerBase;
 
 namespace Compiler
 {
@@ -13,22 +14,15 @@ namespace Compiler
     {
         static void Main(string[] args)
         {
-            string input = "1 + 2 + 3 - 2";
-            var tokenDefinitions = new List<TokenDefinition>() {
-                new TokenDefinition("Integer", "[0-9]+"),
-                new TokenDefinition("Space", " ", true),
-                new TokenDefinition("Minus", "[-]"),
-                new TokenDefinition("Plus", "[+]")
-            };
+            string input = "(1+2);"; // 8
+            
 
+            var compiler = new LanguageCompiler();
 
-            var tokenizer = new Tokenizer(tokenDefinitions);
+            var func = compiler.Compile(input);
 
-            var tokenResult = tokenizer.Parse(input);
-
-            var parser = new Parser();
-
-            var synatxTree = parser.Parse(tokenResult);
+            Console.WriteLine();
+            Console.WriteLine(func());
         }
     }
 }
