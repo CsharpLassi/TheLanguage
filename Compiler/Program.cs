@@ -14,7 +14,7 @@ namespace Compiler
     {
         static void Main(string[] args)
         {
-            string input = "(1+2);"; // 8
+            string input = "int i = 5;i;"; // 8
             
 
             var compiler = new LanguageCompiler();

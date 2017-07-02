@@ -25,6 +25,8 @@ namespace LanguageCompilerBase
                 new TokenDefinition("OpenBracket","[(]"),
                 new TokenDefinition("CloseBracket","[)]"),
                 new TokenDefinition("StatmentEnd",";"),
+                new TokenDefinition("Identifier","[_a-zA-Z][_a-zA-Z0-9]*"),
+                new TokenDefinition("AssignEqual","[=]"),
             };
 
 

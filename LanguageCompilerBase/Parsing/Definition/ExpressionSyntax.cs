@@ -22,6 +22,7 @@ namespace LanguageCompilerBase.Parsing.Definition
                typeof(MultiplicationSyntax),
                typeof(SubstractionSyntax),
                typeof(AdditionSyntax),
+               typeof(VariableCallSyntax),
                typeof(IntegerSyntax),
             };
         }

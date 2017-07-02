@@ -18,6 +18,7 @@ namespace Test
 
         public int GetValue(string code)
         {
+            Console.WriteLine();
             return compiler.Compile(code)();
         }
         
@@ -67,6 +68,14 @@ namespace Test
             Assert.AreEqual(6,GetValue("(1+2)*(3-1);"));
             
             Assert.AreEqual(10,GetValue("((1+3)*2)+2;"));
+        }
+        
+        [Test]
+        public void Variable()
+        {
+            Assert.AreEqual(5,GetValue("int i = 5;i;"));
+            Assert.AreEqual(10,GetValue("int i = 5*2;i;"));
+            Assert.AreEqual(3,GetValue("int i = 1;int j = 2;i+j;"));
         }
         
         

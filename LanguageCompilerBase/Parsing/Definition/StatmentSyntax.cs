@@ -4,7 +4,7 @@ namespace LanguageCompilerBase.Parsing.Definition
 {
     public class StatmentSyntax : Syntax
     {
-        public ExpressionSyntax Expression { get; set; }
+        public Syntax Expression { get; set; }
         
         public StatmentSyntax() : base(nameof(StatmentSyntax))
         {
@@ -16,8 +16,18 @@ namespace LanguageCompilerBase.Parsing.Definition
             {
                 if (stream[i].Name == "StatmentEnd")
                 {
+                    Expression = new AssignSyntax();
+
+                    var newStream = stream.Take(i);
+                    
+                    if (Expression.Check(newStream) == ParseStatus.Ok)
+                    {
+                        stream.Replace(0,2,this);
+                        return ParseStatus.Ok;
+                    }
+                    
                     Expression = new ExpressionSyntax();
-                    if (Expression.Check(stream.Take(i)) == ParseStatus.Ok)
+                    if (Expression.Check(newStream) == ParseStatus.Ok)
                     {
                         stream.Replace(0,2,this);
                         return ParseStatus.Ok;

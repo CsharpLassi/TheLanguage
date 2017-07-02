@@ -18,7 +18,7 @@ namespace LanguageCompilerBase.Parsing.Definition
             {
                 StatmentSyntax statmentSyntax = new StatmentSyntax();
                 
-                if (statmentSyntax.Check(stream.Skip(0)) == ParseStatus.Error)
+                if (statmentSyntax.Check(stream.Skip(i)) == ParseStatus.Error)
                     return ParseStatus.Error;
                 
                 Statments.Add(statmentSyntax);
