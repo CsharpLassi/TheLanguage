@@ -13,7 +13,7 @@ namespace LanguageCompilerBase.Parsing.Definition
             Token = token;
         }
 
-        public override ParseStatus Check(SyntaxStream tokens)
+        public override ParseStatus Check(SyntaxStream tokens, ParseScope scope)
         {
             return ParseStatus.Error;
         }

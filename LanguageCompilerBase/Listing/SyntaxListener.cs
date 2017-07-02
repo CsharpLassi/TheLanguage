@@ -6,33 +6,44 @@ namespace LanguageCompilerBase.Listing
 {
     public abstract class SyntaxListener
     {
-        public delegate void CallSyntaxFunc<T>(T syntax, Scope scope);
+        public delegate void BeginCallSyntaxFunc<T, S>(T syntax, S scope)
+            where T : Syntax
+            where S : Scope;
+        
+        public delegate void EndCallSyntaxFunc<T,S>(T syntax, S scope)
+            where T : Syntax
+            where S : Scope;
         
         private abstract class CallSyntax
         {
-            public abstract void Begin(object syntax, Scope scope);
+            public abstract Scope Begin(object syntax, Scope scope);
             public abstract void End(object syntax, Scope scope);
         }
         
-        private class CallSyntaxClass<T> : CallSyntax
+        private class CallSyntaxClass<T,S> : CallSyntax
             where T : Syntax
+            where S : Scope
         {
-            private CallSyntaxFunc<T> beginFunc;
-            private CallSyntaxFunc<T> endFunc;
+            private BeginCallSyntaxFunc<T,S> beginFunc;
+            private EndCallSyntaxFunc<T,S> endFunc;
             
-            public CallSyntaxClass(CallSyntaxFunc<T> begin, CallSyntaxFunc<T> end)
+            public CallSyntaxClass(BeginCallSyntaxFunc<T,S> begin, EndCallSyntaxFunc<T,S> end)
             {
                 beginFunc = begin;
                 endFunc = end;
             }
             
-            public override void Begin(object syntax,Scope scope)
+            public override Scope Begin(object syntax, Scope scope)
             {
-                if (beginFunc == null)
-                    return;
+                
 
                 var callSyntax = (T) syntax;
-                beginFunc(callSyntax,scope);
+                
+                var newScope = scope.CreateChild<S>(callSyntax.Name);
+                
+                beginFunc?.Invoke(callSyntax, newScope);
+
+                return scope;
             }
             
             public override void End(object syntax,Scope scope)
@@ -41,15 +52,18 @@ namespace LanguageCompilerBase.Listing
                     return;
 
                 var callSyntax = (T) syntax;
-                endFunc(callSyntax,scope);
+                endFunc(callSyntax,(S)scope);
             }
+
+
         }
         
         Dictionary<Type,CallSyntax> syntaxs = new Dictionary<Type, CallSyntax>();
         
         public Scope Listen(SyntaxTree tree)
         {
-            var scope = new Scope();
+            var scope = Scope.CreateGlobalScope();
+            var methodeScope = new MethodeScope(scope,"Main");
             Listen(tree.Statments,scope);
             return scope;
         }
@@ -60,20 +74,21 @@ namespace LanguageCompilerBase.Listing
             if (syntaxs.ContainsKey(syntax.GetType()))
                 callSyntax = syntaxs[syntax.GetType()];
             
-            callSyntax?.Begin(syntax,scope);
+            var newScope = callSyntax?.Begin(syntax,scope);
             
             foreach (var child in syntax.GetElements())
             {
-                Listen(child,scope);
+                Listen(child,newScope);
             }
 
-            callSyntax?.End(syntax,scope);
+            callSyntax?.End(syntax,newScope);
         }
 
-        protected virtual void AttachSyntax<T>(CallSyntaxFunc<T> beginFunc, CallSyntaxFunc<T> endFunc)
+        protected virtual void AttachSyntax<T,S>(BeginCallSyntaxFunc<T,S> beginFunc, EndCallSyntaxFunc<T,S> endFunc)
             where T : Syntax
+            where S : Scope
         {
-            syntaxs.Add(typeof(T),new CallSyntaxClass<T>(beginFunc,endFunc));
+            if (beginFunc != null) syntaxs.Add(typeof(T), new CallSyntaxClass<T, S>(beginFunc, endFunc));
         }
 
 

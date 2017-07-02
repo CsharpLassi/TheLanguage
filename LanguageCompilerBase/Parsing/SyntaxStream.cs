@@ -55,7 +55,7 @@ namespace LanguageCompilerBase.Parsing
         
         public SyntaxStream Skip(int count)
         {
-            if (count >=  Count)
+            if (count >  Count)
                 throw new Exception();
             
             return  new SyntaxStream(this,count,Count-count);

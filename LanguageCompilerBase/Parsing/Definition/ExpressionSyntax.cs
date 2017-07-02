@@ -34,7 +34,7 @@ namespace LanguageCompilerBase.Parsing.Definition
         }
 
 
-        public override ParseStatus Check(SyntaxStream stream)
+        public override ParseStatus Check(SyntaxStream stream, ParseScope scope)
         {
             
             
@@ -56,7 +56,7 @@ namespace LanguageCompilerBase.Parsing.Definition
                 
                     var syntax = (Syntax)Activator.CreateInstance(syntaxType);
                 
-                    var result = syntax.Check(stream);
+                    var result = syntax.Check(stream, scope);
 
                     if (result == ParseStatus.Ok)
                     {

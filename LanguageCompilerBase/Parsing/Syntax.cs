@@ -18,7 +18,7 @@ namespace LanguageCompilerBase.Parsing
             return Name;
         }
 
-        public abstract ParseStatus Check(SyntaxStream stream);
+        public abstract ParseStatus Check(SyntaxStream stream,ParseScope scope);
 
         public abstract  IEnumerable<Syntax> GetElements();
     }

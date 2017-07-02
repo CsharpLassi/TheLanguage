@@ -6,31 +6,59 @@ namespace LanguageCompilerBase.Listing
 {
     public class Scope
     {
-        private readonly DynamicMethod methode;
-        public ILGenerator Generator { get; }
+        public string Name { get; private set; }
 
-        public Dictionary<string,LocalBuilder> LocalVariables { get; private set; }
+        private TypeList types;
+        public TypeList Types
+        {
+            get
+            {
+                if (ParentScope != null)
+                    return ParentScope.Types;
+
+                if (types != null)
+                    types = new TypeList();
+                
+                return types;
+            }
+        }
+
+        public Scope ParentScope { get; private set; }
         
-        public Scope()
+        protected Scope() 
+            : this("General")
         {
-           methode = new DynamicMethod("Test", typeof(int), null);
-           Generator = methode.GetILGenerator();
-            
-           LocalVariables = new Dictionary<string, LocalBuilder>();
+           
         }
 
-        public Func<int> Create()
+        public T CreateChild<T>(string name)
+            where  T: Scope
         {
-            Generator.Emit(OpCodes.Ret);
-            return (Func<int>)methode.CreateDelegate(typeof(Func<int>));
+            var instance = (T)Activator.CreateInstance(typeof(T), this, name);
+
+            return instance;
         }
 
-        public LocalBuilder CreateVariable(string name, Type variableType)
+        protected Scope(Scope parentScope,string name)
         {
-            var localBuilder = Generator.DeclareLocal(variableType);
+            ParentScope = parentScope;
+            Name = $"{ParentScope.Name}.{name}";
+        }
+
+        public static Scope CreateGlobalScope()
+        {
+            return new Scope();
+        }
+        
+        private Scope(string name)
+        {
+            Name = name;
+        }
+
+
+        public virtual void CreateVariable(string name, Type typeNetType)
+        {
             
-            LocalVariables.Add(name,localBuilder);
-            return localBuilder;
         }
     }
 }

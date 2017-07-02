@@ -12,13 +12,13 @@ namespace LanguageCompilerBase.Parsing.Definition
             Statments = new List<StatmentSyntax>();
         }
 
-        public override ParseStatus Check(SyntaxStream stream)
+        public override ParseStatus Check(SyntaxStream stream, ParseScope scope)
         {
             for (int i = 0; i < stream.Count; i++)
             {
                 StatmentSyntax statmentSyntax = new StatmentSyntax();
                 
-                if (statmentSyntax.Check(stream.Skip(i)) == ParseStatus.Error)
+                if (statmentSyntax.Check(stream.Skip(i),scope) == ParseStatus.Error)
                     return ParseStatus.Error;
                 
                 Statments.Add(statmentSyntax);

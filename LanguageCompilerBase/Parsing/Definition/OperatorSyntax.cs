@@ -15,7 +15,7 @@ namespace LanguageCompilerBase.Parsing.Definition
             Operator = operatorName;
         }
 
-        public override ParseStatus Check(SyntaxStream stream)
+        public override ParseStatus Check(SyntaxStream stream, ParseScope scope)
         {
             if (stream.Count < 3)
                 return ParseStatus.Error;
@@ -28,8 +28,8 @@ namespace LanguageCompilerBase.Parsing.Definition
                     Left = new ExpressionSyntax();
                     Right = new ExpressionSyntax();
                     
-                    if (Left.Check(stream.Get(i-1,1)) == ParseStatus.Ok &&
-                        Right.Check(stream.Get(i + 1,1)) == ParseStatus.Ok)
+                    if (Left.Check(stream.Get(i-1,1), scope) == ParseStatus.Ok &&
+                        Right.Check(stream.Get(i + 1,1), scope) == ParseStatus.Ok)
                     {
                         stream.Replace(i-1,3,this);
                         return ParseStatus.Ok;

@@ -11,7 +11,7 @@ namespace LanguageCompilerBase.Parsing.Definition
         {
         }
 
-        public override ParseStatus Check(SyntaxStream stream)
+        public override ParseStatus Check(SyntaxStream stream, ParseScope scope)
         {
             for (int i = 0; i < stream.Count; i++)
             {
@@ -37,7 +37,7 @@ namespace LanguageCompilerBase.Parsing.Definition
                                 var expression = new ExpressionSyntax();
                                 var expressionStream = stream.Get(i + 1, j - (i + 1));
 
-                                if (expression.Check(expressionStream) == ParseStatus.Ok)
+                                if (expression.Check(expressionStream, scope) == ParseStatus.Ok)
                                 {
                                     ExpressionSyntax = expression;
                                     stream.Replace(i, 3, this);

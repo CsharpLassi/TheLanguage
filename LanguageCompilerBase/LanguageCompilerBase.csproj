@@ -39,14 +39,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompilerType.cs" />
     <Compile Include="LanguageCompiler.cs" />
     <Compile Include="Listing\CodeListener.cs" />
+    <Compile Include="Listing\ExpressionScope.cs" />
+    <Compile Include="Listing\MethodeScope.cs" />
     <Compile Include="Listing\Scope.cs" />
     <Compile Include="Listing\SyntaxListener.cs" />
     <Compile Include="Parsing\Definition\AdditionSyntax.cs" />
     <Compile Include="Parsing\Definition\AssignSyntax.cs" />
     <Compile Include="Parsing\Definition\BracketSyntax.cs" />
     <Compile Include="Parsing\Definition\DivisionSyntax.cs" />
+    <Compile Include="Parsing\Definition\DynamicTypeSyntax.cs" />
     <Compile Include="Parsing\Definition\ExpressionPartSyntax.cs" />
     <Compile Include="Parsing\Definition\ExpressionSyntax.cs" />
     <Compile Include="Parsing\Definition\IntegerSyntax.cs" />
@@ -59,7 +63,9 @@
     <Compile Include="Parsing\Definition\VariableCallSyntax.cs" />
     <Compile Include="Parsing\Definition\VariableDecleration.cs" />
     <Compile Include="Parsing\Definition\VariableSyntax.cs" />
+    <Compile Include="Parsing\Definition\VariableTypeSyntax.cs" />
     <Compile Include="Parsing\Parser.cs" />
+    <Compile Include="Parsing\ParseScope.cs" />
     <Compile Include="Parsing\ParseStatus.cs" />
     <Compile Include="Parsing\Syntax.cs" />
     <Compile Include="Parsing\SyntaxStream.cs" />
@@ -68,6 +74,7 @@
     <Compile Include="Scanning\Token.cs" />
     <Compile Include="Scanning\TokenDefinition.cs" />
     <Compile Include="Scanning\Tokenizer.cs" />
+    <Compile Include="TypeList.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

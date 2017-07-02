@@ -16,27 +16,27 @@ namespace LanguageCompilerBase.Parsing.Definition
         {
         }
 
-        public override ParseStatus Check(SyntaxStream stream)
+        public override ParseStatus Check(SyntaxStream stream, ParseScope scope)
         {
-            if ( stream.Count > 1 && stream[1].Name == "AssignEqual")
+            for (int i = 0; i < stream.Count; i++)
             {
-                
-            }
-            else if( stream.Count > 2 && stream[2].Name == "AssignEqual")
-            {
-                Variable = new VariableDecleration();
-                if (Variable.Check(stream.Take(2)) == ParseStatus.Error)
-                    return ParseStatus.Error;
+                if (stream[i].Name == "AssignEqual")
+                {
+                    Variable = new VariableDecleration();
+                    if (Variable.Check(stream.Take(i), scope) == ParseStatus.Error)
+                        return ParseStatus.Error;
 
                 
-                Expression = new ExpressionSyntax();
-                if (Expression.Check(stream.Skip(2)) == ParseStatus.Error)
-                    return ParseStatus.Error;
+                    Expression = new ExpressionSyntax();
+                    if (Expression.Check(stream.Skip(2), scope) == ParseStatus.Error)
+                        return ParseStatus.Error;
                 
-                stream.Replace(0,3,this);
+                    stream.Replace(0,3,this);
                 
-                return ParseStatus.Ok;
+                    return ParseStatus.Ok;
+                }
             }
+            
             
             
             return ParseStatus.Error;
@@ -44,8 +44,9 @@ namespace LanguageCompilerBase.Parsing.Definition
 
         public override IEnumerable<Syntax> GetElements()
         {
-            yield return Variable;
             yield return Expression;
+            yield return Variable;
+            
         }
     }
 }

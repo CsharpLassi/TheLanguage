@@ -25,7 +25,9 @@ namespace LanguageCompilerBase
                 new TokenDefinition("OpenBracket","[(]"),
                 new TokenDefinition("CloseBracket","[)]"),
                 new TokenDefinition("StatmentEnd",";"),
+                new TokenDefinition("Define","def"),
                 new TokenDefinition("Identifier","[_a-zA-Z][_a-zA-Z0-9]*"),
+                new TokenDefinition("DoublePoint","[:]"),
                 new TokenDefinition("AssignEqual","[=]"),
             };
 
@@ -45,7 +47,7 @@ namespace LanguageCompilerBase
             var tokenResult = tokenizer.Parse(code);
             var syntaxTree = parser.Parse(tokenResult);
             
-            var scope = codeListener.Listen(syntaxTree);
+            var scope = (MethodeScope)codeListener.Listen(syntaxTree);
 
             var func = scope.Create();
 

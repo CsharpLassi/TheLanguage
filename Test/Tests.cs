@@ -71,11 +71,17 @@ namespace Test
         }
         
         [Test]
+        public void DynamicVariable()
+        {
+            Assert.AreEqual(5,GetValue("def i = 5;i;"));
+            Assert.AreEqual(10,GetValue("def i = 5*2;i;"));
+            Assert.AreEqual(3,GetValue("def i = 1;int j = 2;i+j;"));
+        }
+
+        [Test]
         public void Variable()
         {
-            Assert.AreEqual(5,GetValue("int i = 5;i;"));
-            Assert.AreEqual(10,GetValue("int i = 5*2;i;"));
-            Assert.AreEqual(3,GetValue("int i = 1;int j = 2;i+j;"));
+            Assert.AreEqual(5,GetValue("def i : int = 5;i;"));
         }
         
         

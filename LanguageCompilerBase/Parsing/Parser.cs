@@ -18,7 +18,9 @@ namespace LanguageCompilerBase.Parsing
 
             SyntaxStream stream = new SyntaxStream(tokens);
             
-            statment.Check(stream);
+            var scope = new ParseScope();
+            
+            statment.Check(stream,scope);
 
             return new SyntaxTree(statment);
         }

@@ -14,7 +14,7 @@ namespace LanguageCompilerBase.Parsing.Definition
         {
         }
 
-        public override ParseStatus Check(SyntaxStream stream)
+        public override ParseStatus Check(SyntaxStream stream, ParseScope scope)
         {
             if (stream.Count != 1)
                 return ParseStatus.Error;

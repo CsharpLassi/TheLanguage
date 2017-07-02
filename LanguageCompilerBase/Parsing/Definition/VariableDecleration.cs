@@ -7,28 +7,45 @@ namespace LanguageCompilerBase.Parsing.Definition
 {
     public class VariableDecleration : VariableSyntax
     {
-        public string VariableType { get; set; }
-        
-
-        
+        public VariableTypeSyntax VariableType { get; set; }
         
         public VariableDecleration() 
             : base(nameof(VariableDecleration))
         {
         }
 
-        public override ParseStatus Check(SyntaxStream stream)
+        public override ParseStatus Check(SyntaxStream stream, ParseScope scope)
         {
-            var typeToken = stream[0] as TokenSyntax;
+            if (stream.Count < 2)
+                return ParseStatus.Error;
+            
+            var defineToken = stream[0] as TokenSyntax;
             var nameToken = stream[1] as TokenSyntax;
             
-            if (typeToken != null && typeToken.Name == "Identifier" &&
+            if (defineToken != null && defineToken.Name == "Define" &&
                 nameToken != null && nameToken.Name == "Identifier")
             {
-                VariableType = typeToken.Token.Value;
                 VariableName = nameToken.Token.Value;
+
+                if (stream.Count == 2)
+                {
+                    VariableType = new DynamicTypeSyntax();
+                    stream.Replace(0,2,this); 
+                }
+                else
+                {
+                    var pointToken = stream[2] as TokenSyntax;
+                    var typeToken = stream[3] as TokenSyntax;
+
+                    if (pointToken != null && pointToken.Name == "DoublePoint" &&
+                        typeToken != null && typeToken.Name == "Identifier")
+                    {
+                        VariableType = new VariableTypeSyntax(typeToken.Token.Value,typeToken.Token.Value);
+                        stream.Replace(0,4,this);
+                    }
+                }
                 
-                stream.Replace(0,2,this);
+                
                 
                 return ParseStatus.Ok;
             }
@@ -38,7 +55,7 @@ namespace LanguageCompilerBase.Parsing.Definition
 
         public override IEnumerable<Syntax> GetElements()
         {
-           yield break;
+           yield return VariableType;
         }
 
     }
