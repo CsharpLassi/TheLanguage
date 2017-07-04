@@ -22,7 +22,7 @@ namespace LanguageCompilerBase.Parsing.Definition
             {
                 if (stream[i].Name == "AssignEqual")
                 {
-                    Variable = new VariableDecleration();
+                    Variable = new VariableDeclerationSyntax();
                     if (Variable.Check(stream.Take(i), scope) == ParseStatus.Error)
                         return ParseStatus.Error;
 

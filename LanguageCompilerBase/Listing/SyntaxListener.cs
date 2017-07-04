@@ -6,7 +6,7 @@ namespace LanguageCompilerBase.Listing
 {
     public abstract class SyntaxListener
     {
-        public delegate void BeginCallSyntaxFunc<T, S>(T syntax, S scope)
+        public delegate Scope BeginCallSyntaxFunc<T, S>(T syntax, S scope)
             where T : Syntax
             where S : Scope;
         
@@ -38,12 +38,11 @@ namespace LanguageCompilerBase.Listing
                 
 
                 var callSyntax = (T) syntax;
-                
-                var newScope = scope.CreateChild<S>(callSyntax.Name);
-                
-                beginFunc?.Invoke(callSyntax, newScope);
 
-                return scope;
+                var newScope = scope as S ?? scope.CreateChild<S>(callSyntax.Name);
+                
+
+                return beginFunc?.Invoke(callSyntax, newScope) ?? newScope;
             }
             
             public override void End(object syntax,Scope scope)
@@ -52,6 +51,9 @@ namespace LanguageCompilerBase.Listing
                     return;
 
                 var callSyntax = (T) syntax;
+
+                //var newScope = scope as S ?? scope.CreateChild<S>(callSyntax.Name);
+
                 endFunc(callSyntax,(S)scope);
             }
 
@@ -63,9 +65,9 @@ namespace LanguageCompilerBase.Listing
         public Scope Listen(SyntaxTree tree)
         {
             var scope = Scope.CreateGlobalScope();
-            var methodeScope = new MethodeScope(scope,"Main");
-            Listen(tree.Statments,scope);
-            return scope;
+            var methodeScope = scope.CreateChild<MethodeScope>("Main");
+            Listen(tree.Statments, methodeScope);
+            return methodeScope;
         }
 
         public void Listen(Syntax syntax,Scope scope)
@@ -74,7 +76,7 @@ namespace LanguageCompilerBase.Listing
             if (syntaxs.ContainsKey(syntax.GetType()))
                 callSyntax = syntaxs[syntax.GetType()];
             
-            var newScope = callSyntax?.Begin(syntax,scope);
+            var newScope = callSyntax?.Begin(syntax,scope) ?? scope;
             
             foreach (var child in syntax.GetElements())
             {
@@ -88,7 +90,7 @@ namespace LanguageCompilerBase.Listing
             where T : Syntax
             where S : Scope
         {
-            if (beginFunc != null) syntaxs.Add(typeof(T), new CallSyntaxClass<T, S>(beginFunc, endFunc));
+            syntaxs.Add(typeof(T), new CallSyntaxClass<T, S>(beginFunc, endFunc));
         }
 
 

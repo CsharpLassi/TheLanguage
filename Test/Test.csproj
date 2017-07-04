@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Test</RootNamespace>
     <AssemblyName>Test</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,16 +51,8 @@
       <Project>{48ed32a1-1b97-4aaf-a50d-c4f6f4c49593}</Project>
       <Name>Compiler</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Compiler\Compiler.csproj">
-      <Project>{48ed32a1-1b97-4aaf-a50d-c4f6f4c49593}</Project>
-      <Name>Compiler</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Compiler\Compiler.csproj">
-      <Project>{48ed32a1-1b97-4aaf-a50d-c4f6f4c49593}</Project>
-      <Name>Compiler</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LanguageCompilerBase\LanguageCompilerBase.csproj">
-      <Project>{c4ee8c04-d8dc-4cdd-b864-4dc976357436}</Project>
+      <Project>{C4EE8C04-D8DC-4CDD-B864-4DC976357436}</Project>
       <Name>LanguageCompilerBase</Name>
     </ProjectReference>
   </ItemGroup>

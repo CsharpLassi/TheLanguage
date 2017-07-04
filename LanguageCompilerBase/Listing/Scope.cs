@@ -4,61 +4,57 @@ using System.Reflection.Emit;
 
 namespace LanguageCompilerBase.Listing
 {
-    public class Scope
+    public abstract class Scope<C,P> : Scope
+        where C : Scope
+        where P : IScope,IScopeParent<C> 
     {
-        public string Name { get; private set; }
+        public P ParentScope { get; private set; }
 
-        private TypeList types;
-        public TypeList Types
+        public new  TypeList Types
         {
             get
             {
-                if (ParentScope != null)
-                    return ParentScope.Types;
-
-                if (types != null)
-                    types = new TypeList();
-                
-                return types;
+                return ParentScope.Types;
             }
         }
 
-        public Scope ParentScope { get; private set; }
-        
-        protected Scope() 
+        public Scope(string name,P parent)
+            :base(name)
+        {
+            ParentScope = parent;
+        }
+    }
+
+    public class Scope : IScopeParent<Scope>, IScopeParent<MethodeScope>
+    {
+        public string Name { get; private set; }
+
+        public TypeList Types { get; }
+
+        private Scope() 
             : this("General")
         {
            
         }
 
-        public T CreateChild<T>(string name)
-            where  T: Scope
+        protected Scope(string name)
         {
-            var instance = (T)Activator.CreateInstance(typeof(T), this, name);
-
-            return instance;
-        }
-
-        protected Scope(Scope parentScope,string name)
-        {
-            ParentScope = parentScope;
-            Name = $"{ParentScope.Name}.{name}";
+            Types = new TypeList();
         }
 
         public static Scope CreateGlobalScope()
         {
             return new Scope();
         }
-        
-        private Scope(string name)
-        {
-            Name = name;
-        }
 
-
-        public virtual void CreateVariable(string name, Type typeNetType)
+        public T CreateChild<T>(string name) where T : Scope
         {
-            
+            if (!((this is IScopeParent<T>)) )
+                throw new Exception("Cannot create Scope");
+
+            var instance = (T)Activator.CreateInstance(typeof(T), name, this);
+
+            return instance;
         }
     }
 }

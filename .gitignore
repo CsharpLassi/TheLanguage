@@ -74,3 +74,6 @@ artifacts/
 #Rider
 
 .idea/
+Compiler/obj/Debug/Compiler.csproj.FileListAbsolute.txt
+Compiler/obj/Debug/Compiler.csprojResolveAssemblyReference.cache
+Compiler/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache

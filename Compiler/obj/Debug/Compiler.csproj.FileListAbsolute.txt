@@ -13,3 +13,11 @@ D:/Projekte/Visual 2017/TheLanguage/Compiler/obj/Debug/Compiler.pdb
 /home/lassi/Dokumente/develop/cs/TheLanguage/Compiler/obj/Debug/Compiler.pdb
 /home/lassi/Dokumente/develop/cs/TheLanguage/Compiler/bin/Debug/LanguageCompilerBase.dll
 /home/lassi/Dokumente/develop/cs/TheLanguage/Compiler/bin/Debug/LanguageCompilerBase.pdb
+C:\Users\Christoph\Documents\Visual Studio 2017\Projects\TheLanguage\Compiler\obj\Debug\Compiler.csprojResolveAssemblyReference.cache
+C:\Users\Christoph\Documents\Visual Studio 2017\Projects\TheLanguage\Compiler\bin\Debug\Compiler.exe.config
+C:\Users\Christoph\Documents\Visual Studio 2017\Projects\TheLanguage\Compiler\bin\Debug\Compiler.exe
+C:\Users\Christoph\Documents\Visual Studio 2017\Projects\TheLanguage\Compiler\bin\Debug\Compiler.pdb
+C:\Users\Christoph\Documents\Visual Studio 2017\Projects\TheLanguage\Compiler\bin\Debug\LanguageCompilerBase.dll
+C:\Users\Christoph\Documents\Visual Studio 2017\Projects\TheLanguage\Compiler\bin\Debug\LanguageCompilerBase.pdb
+C:\Users\Christoph\Documents\Visual Studio 2017\Projects\TheLanguage\Compiler\obj\Debug\Compiler.exe
+C:\Users\Christoph\Documents\Visual Studio 2017\Projects\TheLanguage\Compiler\obj\Debug\Compiler.pdb

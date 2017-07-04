@@ -1,17 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection.Emit;
 
 namespace LanguageCompilerBase.Listing
 {
-    public class ExpressionScope : Scope
+    public class ExpressionScope : Scope<ExpressionScope,ICodeScope> , IScopeParent<ExpressionScope> ,  ICodeScope
     {
-        
-        public ExpressionScope(Scope parentScope, string name) : base(parentScope, name)
+        public Dictionary<string, LocalBuilder> LocalVariables => ParentScope.LocalVariables;
+        public ILGenerator Generator => ParentScope.Generator;
+
+        public Type ExpressionType { get; set; }
+
+        public ExpressionScope(string name, MethodeScope parentScope) : base( name,parentScope)
         {
         }
 
-        public override void CreateVariable(string name, Type typeNetType)
+        public LocalBuilder CreateVariable(string name, Type netType)
         {
-            ParentScope.CreateVariable(name, typeNetType);
+            return ParentScope.CreateVariable(name, netType);
         }
     }
 }

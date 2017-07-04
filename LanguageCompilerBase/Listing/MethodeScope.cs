@@ -4,14 +4,15 @@ using System.Reflection.Emit;
 
 namespace LanguageCompilerBase.Listing
 {
-    public class MethodeScope : Scope
+    public class MethodeScope : Scope<MethodeScope,Scope> ,  ICodeScope, IScopeParent<ExpressionScope> 
     {
         private readonly DynamicMethod methode;
         public ILGenerator Generator { get; }
         
         public Dictionary<string,LocalBuilder> LocalVariables { get; private set; }
 
-        public MethodeScope(Scope parentScope, string name) : base(parentScope, name)
+        public MethodeScope( string name, Scope parentScope) 
+            : base( name, parentScope)
         {
             methode = new DynamicMethod("Test", typeof(int), null);
             Generator = methode.GetILGenerator();

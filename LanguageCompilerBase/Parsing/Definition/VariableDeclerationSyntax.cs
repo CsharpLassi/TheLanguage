@@ -5,12 +5,14 @@ using LanguageCompilerBase.Listing;
 
 namespace LanguageCompilerBase.Parsing.Definition
 {
-    public class VariableDecleration : VariableSyntax
+    public class VariableDeclerationSyntax : VariableSyntax
     {
         public VariableTypeSyntax VariableType { get; set; }
-        
-        public VariableDecleration() 
-            : base(nameof(VariableDecleration))
+
+        public bool IsDynamic { get; private set; }
+
+        public VariableDeclerationSyntax() 
+            : base(nameof(VariableDeclerationSyntax))
         {
         }
 
@@ -29,11 +31,14 @@ namespace LanguageCompilerBase.Parsing.Definition
 
                 if (stream.Count == 2)
                 {
+                    IsDynamic = true;
                     VariableType = new DynamicTypeSyntax();
                     stream.Replace(0,2,this); 
                 }
                 else
                 {
+                    IsDynamic = false;
+
                     var pointToken = stream[2] as TokenSyntax;
                     var typeToken = stream[3] as TokenSyntax;
 

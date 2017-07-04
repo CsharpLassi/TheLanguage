@@ -14,7 +14,7 @@ namespace Compiler
     {
         static void Main(string[] args)
         {
-            string input = "def i = 5;i;"; // 8
+            string input = "def i = 5;i = 10; i"; // 8
             
 
             var compiler = new LanguageCompiler();
@@ -23,6 +23,8 @@ namespace Compiler
 
             Console.WriteLine();
             Console.WriteLine(func());
+
+            Console.ReadLine();
         }
     }
 }

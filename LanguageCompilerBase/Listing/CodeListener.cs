@@ -14,22 +14,30 @@ namespace LanguageCompilerBase.Listing
             AttachSyntax<SubstractionSyntax,ExpressionScope>(null,SubstractionEnd);
             AttachSyntax<MultiplicationSyntax,ExpressionScope>(null,MultiplicationEnd);
             AttachSyntax<DivisionSyntax,ExpressionScope>(null,DivisionEnd);
-            AttachSyntax<AssignSyntax,ExpressionScope>(null,AssignEnd);
+
+            AttachSyntax<AssignSyntax,ExpressionScope>(AssignStart,AssignEnd);
             
             AttachSyntax<VariableCallSyntax,ExpressionScope>(null,VariableCallEnd);
-            AttachSyntax<VariableDecleration,ExpressionScope>(VariableDeclerationStart, null);
+            AttachSyntax<VariableDeclerationSyntax,ExpressionScope>(VariableDeclerationStart, null);
         }
 
-        private void VariableDeclerationStart(VariableDecleration syntax, ExpressionScope scope)
+        
+
+        private Scope VariableDeclerationStart(VariableDeclerationSyntax syntax, ExpressionScope scope)
         {
             var name = syntax.VariableName;
-            var type = scope.Types[syntax.VariableType.TypeName];
+            var type = !syntax.IsDynamic ? scope.Types[syntax.VariableType.TypeName].NetType : scope.ExpressionType;
             
             Console.WriteLine($"Create {name}");
             
-            scope.CreateVariable(name,type.NetType);
+
+            scope.CreateVariable(name,type);
+
+            return scope;
 
         }
+
+
 
         private void VariableCallEnd(VariableCallSyntax syntax, ExpressionScope scope)
         {
@@ -51,6 +59,7 @@ namespace LanguageCompilerBase.Listing
 
         private void IntegerEnd(IntegerSyntax syntax, ExpressionScope scope)
         {
+            scope.ExpressionType = scope.Types["int"].NetType;
             Console.WriteLine(syntax.Value);
             scope.Generator.Emit(OpCodes.Ldc_I4,syntax.Value);
         }
@@ -59,6 +68,11 @@ namespace LanguageCompilerBase.Listing
         {
             Console.WriteLine("Div");
             scope.Generator.Emit(OpCodes.Div);
+        }
+
+        private Scope AssignStart(AssignSyntax syntax, ExpressionScope scope)
+        {
+            return scope;
         }
 
         private void AssignEnd(AssignSyntax syntax, ExpressionScope scope)
